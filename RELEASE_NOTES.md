@@ -1,5 +1,62 @@
 # 发布说明
 
+## Novel Control Station 0.2.4 版本
+
+`0.2.4` 是一次面向长篇项目落盘稳定性的修复发布。它把最近加入的自然段控制、章节目录规范和 Windows marathon runner 加固正式收进公开版本说明，重点解决“正文看起来生成了，但没有真正写回项目文件”的交接风险。
+
+### 本版本新增并正式收敛的内容
+
+- 主技能现已正式支持段落模式控制，默认使用更符合网文自然段的 `web-serial-natural`，并允许切换到 `long-paragraph`。
+- 长篇项目标准结构现已把 `chapters/` 与 `control-cards/` 作为真值层的一部分，要求按章保存正文与章节控制卡。
+- `assets/codex-continue-novel.ps1` 现已在提示词层强制要求直接写回项目文件，并支持 `FileWriteBlocked` 停止信号。
+- runner 现已在每轮执行前后比对项目文件快照；如果没有真实写盘，而只是向标准输出返回内容，会停止循环并显式报出未写回。
+- Windows 编码保护现已并入 runner 模板，降低中文脚本与日志乱码概率。
+
+### 为什么这次升级重要
+
+- 网文正文的段落形态终于成为正式控制项，而不是口头约定
+- 长篇项目的落盘位置被标准化，续写链条更容易检查和恢复
+- marathon 自动续写不再把“stdout 里写了一堆字”误判成“项目已经更新”
+
+### 本版本应重点阅读的文档
+
+使用 `0.2.4` 时，建议优先阅读：
+
+- `SKILL.md`：段落模式、标准目录和 marathon runner 的当前总控规则
+- `references/document-templates.md`：`chapters/`、`control-cards/` 与 `09-style-guide.md` 的标准写法
+- `references/chapter-control-card.md`：章节级 paragraph mode 和控制卡落盘规则
+- `references/quality-and-writeback-checks.md`：章节验收后的正文 / 控制卡 / 状态文件回写要求
+- `references/bootstrap-and-marathon-handoff.md`：Windows 编码与 runner 交接细则
+- `assets/codex-continue-novel.ps1`：最新 marathon 写回脚本模板
+
+## Novel Control Station 0.2.3 版本
+
+`0.2.3` 是一次收敛型修复发布。它不引入新的大类工作流，而是把最近加入的风格强化、真实性修订和章节控制能力正式接回总控流程、章节验收逻辑与公开说明，避免“参考文档已经升级，但主技能入口还停在旧层级”的漂移。
+
+### 本版本新增并正式收敛的内容
+
+- `SKILL.md` 现已把 style balance、internalized strengths、support style boundary、style intensity、pseudo-style drift 接入 startup 访谈和章节工作流。
+- 风格模块强化不再只是 `references/style-modules/` 内部说明，现已成为项目级 `09-style-guide.md` 和章节级 control card 的正式控制项。
+- 章节验收规则现已允许 bridge / recovery / quiet chapters 以“加重压力、重排位置、深化代价”的方式通过，而不是机械要求每章都做高烈度显性推进。
+- `README.md`、`CHANGELOG.md` 与本发布说明现已统一到当前版本，减少公开文档和实际技能行为的错位。
+
+### 为什么这次升级重要
+
+- 风格强化终于从“附加参考”变成“主流程能力”
+- 章节验收更符合长篇小说的实际节奏，不会系统性逼迫安静章节假装高潮
+- 公开说明和实际技能状态对齐，后续维护更容易判断当前真值
+
+### 本版本应重点阅读的文档
+
+使用 `0.2.3` 时，建议优先阅读：
+
+- `SKILL.md`：当前生效的总控流程
+- `references/document-templates.md`：项目真值文件结构
+- `references/interview-and-handoff-flow.md`：项目启动时的风格与控制信息采集
+- `references/chapter-control-card.md`：章节级风格驱动、低烈度路径与风险记录
+- `references/quality-and-writeback-checks.md`：章节验收、安静章节合法路径与最终回写规则
+- `references/style-modules/`：风格路由和风格强化本体
+
 ## Novel Control Station 0.2.0 版本
 
 `0.2.0` 是在 `0.1.0` 基础上的一次功能型升级发布。它把此前已经接入源码树、但还未正式打包说明的能力，整理成了清晰可用的正式版本。

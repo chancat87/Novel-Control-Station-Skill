@@ -35,6 +35,11 @@ Do not use this skill for one-off poems, short jokes, or isolated scenes that do
 - Do not let a secondary graph, recall map, or scratch index override the standard project files. Derived control views are support systems only.
 - Do not satisfy forgotten-element checks with token cameos, cosmetic mentions, or checklist references. Re-entry must change pressure, debt, or expectation.
 - Do not run de-AI cleanup as blind flattening. Preserve genre register, era texture, narrator stance, and character voice.
+- Do not let narration or interiority slide into review copy, theory-heavy explanation, or industry jargon unless the point of view, profession, era, or setting truly requires that diction.
+- Do not keep specialist terms, abstract analysis words, or institutional jargon when ordinary readers would lose the thread and the same story work can be done through action, consequence, or scene context.
+- Default paragraph mode to `web-serial-natural` unless `09-style-guide.md` or the current chapter control card explicitly switches to `long-paragraph`.
+- Do not let chapter prose fake intensity with decorative blank space. Under `web-serial-natural`, narrative paragraphs usually hold `2-4` sentences; single-sentence narrative paragraphs are for emphasis, reveal, shock, cut, or hook and should not chain by habit.
+- Do not split one speaker's continuous beat into multiple paragraphs unless interruption, stage movement, or a pressure turn truly changes the beat.
 - Do not force scene ladders into rigid formula when the chapter needs looser movement. Use scene control to preserve pressure, not to fake architecture.
 - Do not use chapter titles as spoiler summaries, empty riddles, or decorative labels detached from chapter pressure.
 - If the project uses chapter titles, lock a naming system at project level and keep title voice consistent unless the book is intentionally entering a new phase.
@@ -57,7 +62,18 @@ Maintain these files for every novel project:
 - `07-chapter-roadmap.md`
 - `08-dynamic-state.md`
 - `09-style-guide.md`
+- `chapters/`
+- `control-cards/`
 - `logs/writing-log.md`
+
+Directory rules:
+
+- store accepted chapter manuscripts in `chapters/`
+- store one persisted chapter control card per accepted chapter in `control-cards/`
+- default file naming:
+  - `chapters/NN-<chapter-title>.md`
+  - `control-cards/NN-<chapter-title>-control-card.md`
+- if chapters are numbered-only, replace `<chapter-title>` with a short chapter slug rather than leaving filenames blank
 
 Read [document-templates.md](references/document-templates.md) when creating or restoring these files.
 
@@ -78,6 +94,8 @@ Bootstrap rules:
 - create `codex-continue-novel.ps1` in the project root whenever a new project is initialized
 - build the file from `assets/codex-continue-novel.ps1`
 - replace only the project root placeholder with the actual project root
+- on Windows, write the root script as `UTF-8 with BOM`; `UTF-8 without BOM` can misread Chinese literals under `powershell.exe`
+- preserve the template's UTF-8 console setup and explicit UTF-8 log writing when repairing the runner
 - repair stale scripts by rebuilding from the template instead of creating a second variant
 - verify the root script exists and the placeholder is gone before marathon handoff
 - if automatic file creation is blocked, tell the user that startup could not finish automatically and instruct them to create or copy the script manually before marathon handoff
@@ -204,12 +222,21 @@ Core questions first:
 4. Ending Direction
    - emotional destination, cost, likely shape of the ending
 5. Style And Market Mode
-   - primary style, support style, target mode, tolerance for slow-burn, chapter title mode, forbidden habits
+   - primary style, support style, style balance target, support style boundary, target mode, tolerance for slow-burn, default style intensity, paragraph mode, chapter title mode, internalized strengths to absorb, forbidden habits, pseudo-style drift, jargon ceiling, and any professional, historical, or setting terms that must remain legible
 
 Language default:
 
 - keep the project in Chinese unless the user explicitly requests another language
 - ask only when needed whether the user wants modern vernacular, historical Chinese texture, web-serial diction, or publication-oriented prose
+- unless a publication-oriented or literary long-paragraph preference is explicit, keep the default paragraph mode at `web-serial-natural`
+- when diction risk is meaningful, write into `09-style-guide.md`:
+  - style balance target and the strengths to absorb from mature works
+  - support style boundary and the chapter-level style intensity range
+  - paragraph mode, chapter-level override policy, and allowed short-paragraph triggers
+  - pseudo-style drift to avoid for each active style
+  - banned AI shell phrases or sentence habits
+  - jargon ceiling for narration and dialogue
+  - any necessary professional, historical, or setting terms that must survive authenticity cleanup
 
 Then derive more questions from the answers:
 
@@ -223,6 +250,8 @@ Then derive more questions from the answers:
   - stress response, blind spots, speech signature
 - romance or high-relationship pressure:
   - emotional debt, relational obstacle, intimacy risk
+- style-sensitive projects:
+  - narration distance, prose density, paragraph mode, how often strike paragraphs are allowed, which strengths should stay active across the whole book, how strong the style should usually run, and which pseudo-style drifts must stay off-limits
 
 Do not ask a fixed questionnaire when the project does not need it. Derive only what the current answers make necessary.
 
@@ -304,6 +333,28 @@ If the user chooses `draft directly`:
 - flag it as temporary
 - record it in `08-dynamic-state.md` under pending confirmation
 
+## Paragraph Mode Control
+
+Record paragraph control in `09-style-guide.md` and inherit it into each chapter control card.
+
+Modes:
+
+- `web-serial-natural`
+  - default mode for chapter prose
+  - narrative paragraphs usually run `2-4` sentences
+  - single-sentence narrative paragraphs are reserved for reveal, impact, pressure cut, emotional stall, or hook
+  - one speaker's dialogue, attached action, and short follow-up should stay in one paragraph unless the beat truly changes
+- `long-paragraph`
+  - use when the project or chapter explicitly needs more continuous interiority, essay-like flow, or publication-oriented long paragraphs
+  - allow longer narrative blocks, but still break on speaker change, point-of-view shift, scene/time jump, or major pressure turn
+  - do not turn continuity into inert exposition walls
+
+Override rules:
+
+- the project default comes from `09-style-guide.md`
+- the current chapter may override only when the chapter control card records the reason and the intended pace or voice effect
+- after drafting and after the authenticity pass, confirm the accepted chapter still matches the selected paragraph mode
+
 ## Chapter Title Control
 
 Read [chapter-title-method.md](references/chapter-title-method.md) when the project uses chapter titles, when the user asks for named chapters, or when a numbered-only chapter system may need to change.
@@ -334,6 +385,7 @@ For every chapter, use this order:
    - pull only the chapter-relevant characters, relationships, plotlines, foreshadows, world rules, and debts
    - track what is hot, what is running cold, and what cannot be forgotten here
 4. Read only the selected internal style module documents needed for this chapter.
+   - use `09-style-guide.md` to identify style balance target, internalized strengths, support style boundary, preferred intensity range, and pseudo-style drift before loading modules
    - read the relevant internal style modules from [style-modules/index.md](references/style-modules/index.md)
    - read each selected module's `core.md` first
    - drill into deeper style documents only if the chapter needs them
@@ -360,25 +412,42 @@ For every chapter, use this order:
    - world-rule memory gaps
    - trope convenience overriding human truth
    - lost social or era pressure
+   - generic AI shells, false-summary sentences, or over-neat contrast patterns
+   - analysis-tone drift, platform-copy drift, or unexplained specialist jargon
+   - paragraph-mode drift such as decorative blank lines, same-speaker over-splitting, or one-sentence paragraph chains with no pressure reason
 7. Generate a chapter control card using [chapter-control-card.md](references/chapter-control-card.md).
+   - record style intensity, paragraph mode, active style drivers, intended payoff, and pseudo-style drift when style pressure is meaningful
+   - write the card to `control-cards/NN-<chapter-title>-control-card.md`; if the title is not final yet, use a stable working slug and rename after the final title check
 8. If the project uses chapter titles, generate `3-5` candidate titles using [chapter-title-method.md](references/chapter-title-method.md).
    - choose a working title that matches the project's naming system
    - record the working title in the chapter control card and `07-chapter-roadmap.md`
 9. If the risk scan is serious, use the missing information branch.
 10. Draft the chapter from the control card.
    - when the chapter needs tighter control, write scene by scene or pressure unit by pressure unit using [scene-execution-patterns.md](references/scene-execution-patterns.md)
+   - inherit paragraph mode from `09-style-guide.md` unless the control card records a chapter-specific override
+   - under `web-serial-natural`, keep most narrative paragraphs at `2-4` sentences and avoid chaining single-sentence narrative paragraphs unless the scene is deliberately striking beats
+   - keep one speaker's continuous beat, attached action, and short follow-up in the same paragraph unless the pressure or stage movement changes
+   - use paragraph breaks for speaker change, scene/time or point-of-view shift, and real pressure turns rather than decorative emptiness
+   - store the accepted chapter manuscript in `chapters/NN-<chapter-title>.md`
 11. Run the chapter benchmark check.
 12. If the benchmark check fails, apply rewrite escalation before accepting the chapter.
 13. Run the authenticity pass using [authenticity-and-de-ai-pass.md](references/authenticity-and-de-ai-pass.md).
+   - strip generic AI patterns, false depth, and abstract summaries first
+   - cut or translate over-professionalized diction unless the project genuinely needs the term
+   - then restore concrete detail, rhythm variation, and project-specific voice
 14. Run a post-authenticity mini recheck.
    - confirm continuity facts still hold
    - confirm character voice and relationship pressure did not flatten or drift
    - confirm hook, closure, and residue still function
+   - confirm paragraphing still matches the active paragraph mode and is not leaning on decorative blank space
+   - confirm readability did not drop behind unnecessary jargon
+   - confirm required professional, era, or setting terms were not accidentally removed
 15. If the project uses chapter titles, run the final title check.
    - confirm the title still matches the accepted chapter's mission, turn, residue, and voice
    - replace the working title if the chapter changed its center during drafting
 16. Review the chapter for continuity, style integrity, thematic pressure, critical standards, and whether return-pressure handling stayed causal rather than token.
 17. Update dynamic and structural files.
+   - keep `chapters/` and `control-cards/` aligned with the accepted chapter title and number
 18. Record the chapter and file updates in the writing log.
 
 ## Chapter Benchmark Check
@@ -405,10 +474,18 @@ Never solve this check with token cameos, random reminders, or fake callbacks th
 
 After structure and benchmark logic are acceptable, run [authenticity-and-de-ai-pass.md](references/authenticity-and-de-ai-pass.md).
 
-Use a two-pass method:
+Use a fixed three-part order:
 
-1. remove generic AI habits, false depth, abstract summaries, and textureless filler
-2. restore concrete detail, rhythm variation, speaker distinction, and project-specific voice
+1. remove generic AI habits, false depth, abstract summaries, empty conclusions, and textureless filler
+2. cut or translate over-specialized diction, analysis-language drift, and reader-hostile jargon unless the point of view or setting genuinely needs the term
+3. restore concrete detail, rhythm variation, speaker distinction, and project-specific voice
+
+Before or during this pass, read `09-style-guide.md` for:
+
+- banned AI shell phrases or phrasing habits
+- paragraph mode and allowed short-paragraph triggers
+- jargon ceiling for narration and dialogue
+- professional, historical, or setting terms that must remain
 
 If the novel intentionally uses literary density, historical register, formal narration, or stylized speech, clean genericity without flattening the chosen mode.
 
@@ -418,6 +495,8 @@ After medium or aggressive authenticity edits, always run a light post-pass rech
 - character voice
 - relationship pressure
 - hook and closure integrity
+- ordinary-reader legibility
+- required terminology that should still remain
 
 ## Rewrite Escalation
 
@@ -502,14 +581,17 @@ At project start:
 
 - ask for 1 or 2 primary styles
 - ask for at most 1 support style
+- record style balance target and the strengths to absorb from mature works
+- define support style boundary, preferred style intensity range, and pseudo-style drift to avoid
 - record forbidden style modes
 
 At chapter time:
 
 - route style loading through [style-modules/index.md](references/style-modules/index.md)
+- use `09-style-guide.md` to decide which strengths are active in this chapter and how hard the style should run
 - load only the selected internal module `core.md` files first
 - load deeper module documents only if the chapter needs them
-- write the chosen style pressures into the chapter control card
+- write the chosen style pressures, active style drivers, payoff focus, and pseudo-style drift into the chapter control card
 
 Available internal modules:
 

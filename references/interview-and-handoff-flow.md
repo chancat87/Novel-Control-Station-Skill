@@ -21,12 +21,16 @@ Start with these:
 - heat / reputation / dual-high preference
 - primary style
 - support style if needed
+- style balance target: reader pull, type payoff, texture
+- paragraph mode
+- strengths to absorb from mature works for the chosen styles
 - forbidden habits
 
 Default language rule:
 
 - keep planning artifacts and fiction output in Chinese unless the user explicitly requests another language
 - ask only when needed whether the preferred Chinese mode is modern vernacular, historical texture, web-serial diction, or publication-oriented prose
+- unless a publication-oriented or literary long-paragraph preference is explicit, keep the default paragraph mode at `web-serial-natural`
 
 Ask one focused question at a time, but use this set to cover the minimum alignment area.
 
@@ -58,9 +62,22 @@ Branch by project type:
 - style-sensitive projects:
   - narration distance
   - prose density
+  - paragraph mode
+  - when short strike paragraphs are allowed
+  - which strengths should be sustained across the whole book
+  - how strong the style should usually run: low, medium, high, adaptive
+  - pseudo-style drift to avoid
   - taboo habits to avoid
 
 Do not ask the same depth for every project. Derive only what the user's answers make necessary.
+
+When style intent becomes clear, write it into `09-style-guide.md` rather than leaving it as loose chat:
+
+- style balance target
+- internalized strengths to absorb
+- paragraph mode and any override rule
+- support style boundary
+- pseudo-style drift to avoid
 
 ## 3. No Drafting Before Handoff
 

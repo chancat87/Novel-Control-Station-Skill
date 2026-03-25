@@ -10,10 +10,11 @@ Use this reference only when:
 1. Create the standard project files first.
 2. Read `assets/codex-continue-novel.ps1`.
 3. Replace `__PROJECT_ROOT__` with the actual absolute project root.
-4. Write the result to `codex-continue-novel.ps1` in the project root.
-5. Verify that `codex-continue-novel.ps1` exists in the project root.
-6. Verify that the written script no longer contains `__PROJECT_ROOT__`.
-7. Record the launch command in the handoff wording:
+4. On Windows, write the result to `codex-continue-novel.ps1` in the project root as `UTF-8 with BOM`, not `UTF-8 without BOM`.
+5. Preserve the template's UTF-8 console setup and explicit UTF-8 log writing.
+6. Verify that `codex-continue-novel.ps1` exists in the project root.
+7. Verify that the written script no longer contains `__PROJECT_ROOT__`.
+8. Record the launch command in the handoff wording:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\codex-continue-novel.ps1
@@ -38,7 +39,7 @@ powershell -ExecutionPolicy Bypass -File .\codex-continue-novel.ps1
 Example startup handoff:
 
 - project root: `D:\novels\qing-ye-ji`
-- action: write `D:\novels\qing-ye-ji\codex-continue-novel.ps1` from the template, replacing only `__PROJECT_ROOT__`
+- action: write `D:\novels\qing-ye-ji\codex-continue-novel.ps1` from the template, replacing only `__PROJECT_ROOT__`, and keep the file as `UTF-8 with BOM`
 - user-facing handoff: `关闭当前会话后，在项目根目录运行 powershell -ExecutionPolicy Bypass -File .\codex-continue-novel.ps1`
 
 Example marathon handoff:
